@@ -4,26 +4,32 @@ import { useState, useEffect } from "react";
 
 const Counter = () => {
   const [count, setCount] = useState(0);
+  const [color, setColor] = useState("salmon");
   const handleIncrease = () => setCount(count + 1);
   const handleDecrease = () => setCount(count - 1);
 
   useEffect(() => {
-    console.log(
-      `I'm inside useEffect function. I will only run upon mouting. Current count is: ${count}`
-    );
+    console.log(`Current count is: ${count}`);
 
     return () => {
       console.log(
-        `I'm removing anything that was setup above! I Last count was ${count} But now, now i will only run when conponent is unmounted!`
+        `I'm removing anything that was setup above! The last count was ${count} `
       );
     };
-  }, []);
+  }, [count]);
+  // [] - Array includes state(s) when we want trigger use useeffect function. Empy array means we run only useEffect only when we load page.
+
+  const handleColorChange = () => {
+    const nextColor = color === "salmon" ? "gold" : "salmon";
+    setColor(nextColor);
+  };
 
   return (
     <div>
       <button onClick={handleDecrease}>Decrease</button>
+      <button onClick={handleColorChange}>Change COLOR</button>
       <button onClick={handleIncrease}>Increase</button>
-      <h3>{count}</h3>
+      <h2 style={{ color }}>{count}</h2>
     </div>
   );
 };
